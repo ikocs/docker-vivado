@@ -40,10 +40,10 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 
 COPY install_config.txt /vivado-installer/
-COPY ${INSTALL_FILE} /vivado-installer/
+COPY Xilinx_Unified_2020.1_0602_1208.tar.gz /vivado-installer/
 
-RUN tar -xvf /vivado-installer/${INSTALL_FILE} -C /vivado-installer 
-RUN /vivado-installer/xsetup \
+RUN tar -xf /vivado-installer/Xilinx_Unified_2020.1_0602_1208.tar.gz -C /vivado-installer 
+RUN /vivado-installer/Xilinx_Unified_2020.1_0602_1208/xsetup \
     --agree 3rdPartyEULA,WebTalkTerms,XilinxEULA \
     --batch Install \
     --config /vivado-installer/install_config.txt 
