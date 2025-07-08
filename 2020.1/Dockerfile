@@ -2,6 +2,7 @@ FROM ubuntu:xenial
 
 ENV DEBIAN_FRONTEND noninteractive
 
+ARG INSTALL_FILE "Xilinx_Unified_2020.1_0602_1208.tar.gz"
 
 RUN \
   sed -i -e "s%http://[^ ]\+%http://ftp.jaist.ac.jp/pub/Linux/ubuntu/%g" /etc/apt/sources.list && \
@@ -15,6 +16,18 @@ RUN \
   rm -rf /var/lib/apt/lists/* && \
   echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
+# ARG gosu_version "1.10"
+# RUN \
+#   curl -SL "https://github.com/tianon/gosu/releases/download/${gosu_version}/gosu-$(dpkg --print-architecture)" \
+#     -o /usr/local/bin/gosu && \
+#   curl -SL "https://github.com/tianon/gosu/releases/download/${gosu_version}/gosu-$(dpkg --print-architecture).asc" \
+#     -o /usr/local/bin/gosu.asc && \
+#   gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 && \
+#   gpg --verify /usr/local/bin/gosu.asc && \
+#   rm -rf /usr/local/bin/gosu.asc /root/.gnupg && \
+#   chmod +x /usr/local/bin/gosu
+
+# vivado
 RUN \
   dpkg --add-architecture i386 && \
   apt-get update && \
@@ -29,13 +42,12 @@ RUN \
 COPY install_config.txt /vivado-installer/
 COPY ${INSTALL_FILE} /vivado-installer/
 
-RUN \
-  cat /vivado-installer/${INSTALL_FILE} | tar zx --strip-components=1 -C /vivado-installer && \
-  /vivado-installer/xsetup \
+RUN cat /vivado-installer/${INSTALL_FILE} | tar zx --strip-components=1 -C /vivado-installer 
+RUN /vivado-installer/xsetup \
     --agree 3rdPartyEULA,WebTalkTerms,XilinxEULA \
     --batch Install \
-    --config /vivado-installer/install_config.txt && \
-  rm -rf /vivado-installer
+    --config /vivado-installer/install_config.txt 
+RUN rm -rf /vivado-installer
 
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
