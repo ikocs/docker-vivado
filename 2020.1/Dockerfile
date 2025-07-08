@@ -2,7 +2,6 @@ FROM ubuntu:xenial
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ARG INSTALL_FILE="Xilinx_Unified_2020.1_0602_1208.tar.gz"
 
 RUN \
   sed -i -e "s%http://[^ ]\+%http://ftp.jaist.ac.jp/pub/Linux/ubuntu/%g" /etc/apt/sources.list && \
@@ -16,7 +15,6 @@ RUN \
   rm -rf /var/lib/apt/lists/* && \
   echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-ARG gosu_version=1.10
 RUN \
   curl -SL "https://github.com/tianon/gosu/releases/download/${gosu_version}/gosu-$(dpkg --print-architecture)" \
     -o /usr/local/bin/gosu && \
