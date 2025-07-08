@@ -42,7 +42,7 @@ RUN \
 COPY install_config.txt /vivado-installer/
 COPY ${INSTALL_FILE} /vivado-installer/
 
-RUN cat /vivado-installer/${INSTALL_FILE} | tar zx --strip-components=1 -C /vivado-installer 
+RUN tar -xvf /vivado-installer/${INSTALL_FILE} -C /vivado-installer 
 RUN /vivado-installer/xsetup \
     --agree 3rdPartyEULA,WebTalkTerms,XilinxEULA \
     --batch Install \
