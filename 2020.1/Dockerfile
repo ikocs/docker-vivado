@@ -54,4 +54,6 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
+COPY toolchain.cmake /tools/Xilinx/toolchain.cmake
+
 CMD ["/bin/bash", "-l"]
