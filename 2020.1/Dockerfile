@@ -32,7 +32,7 @@ RUN \
   dpkg --add-architecture i386 && \
   apt-get update && \
   apt-get -y --no-install-recommends install \
-    build-essential git gcc-multilib libc6-dev:i386 ocl-icd-opencl-dev libjpeg62-dev && \
+    build-essential git gcc-multilib libc6-dev:i386 ocl-icd-opencl-dev libjpeg62-dev cmake && \
   apt-get -y -f install && \
   apt-get -y install python && \
   apt-get autoclean && \
